@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "922290785768",
+    "project_id": "ismailshop-3e789",
+    "storage_bucket": "ismailshop-3e789.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922290785768:android:894a1003783df99914a85d",
+        "android_client_info": {
+          "package_name": "com.ismailshop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADkNDpLEmKSQb5-9Lu9MhhJPJwK3mZk8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

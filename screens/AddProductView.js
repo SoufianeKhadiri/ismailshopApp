@@ -12,7 +12,7 @@ import uploadImageToFirebase from '../api/uploadImageToFirebase ';
 export default function AddProductView() {
     const navigation = useNavigation();
     
-    var createdToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0NUB0ZXN0LmNvbSIsImNyZWF0ZWQiOjE3MDcwNjI3NzAzOTEsImV4cCI6MTcwNzY2NzU3MH0.HTUTSelLNEUBrtU3Gakf7hP35LcRiIG5fcW5wio7bBXfXg8G-XZ0UjzNbA9idikz-knoP1U9674GUleYzaF-HQ";
+    var createdToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0NUB0ZXN0LmNvbSIsImNyZWF0ZWQiOjE3MDc2Nzc2MjgzMjUsImV4cCI6MTcwODI4MjQyOH0.gwmKfDalzhk_amCpjXWbnSRUrZROazHZxH2MyIg9l3WY6VfXmesARqSQAau9ccqYgQnegeqOGXAg1twKR-BXag";
     let [images, setImages] = useState([]);
     let [image, setImage] = useState('https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/33533fe2-1157-4001-896e-1803b30659c8/air-force-1-07-herrenschuh-HvZlfx.png');
     let [imagesLinks, setImagesLinks] = useState([]);
@@ -112,12 +112,10 @@ const openImageLibrary = () => {
   
 
 const uploadImagesToFirebase = async () => {
-  const promises = images.map(imageUri => uploadImageToFirebase(imageUri));
+  const promises = images.map((imageUri, index) => uploadImageToFirebase(productName + index,imageUri));
   const links = await Promise.all(promises);
 
-  // This line will only execute after all promises in the `promises` array have been resolved
-  // setImagesLinks(currentLinks => [...currentLinks, ...links]);
-  return links; // Note: Logging `links` directly since `imagesLinks` may not reflect the updated state immediately
+  return links; 
 }
 
 const insertProduct = async (productData) => {

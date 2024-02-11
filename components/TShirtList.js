@@ -1,12 +1,13 @@
 import React from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { Alert, FlatList, StyleSheet } from 'react-native';
 import TShirtItem from './TshirtItem';
 
-const TShirtList = ({ tshirts, onTShirtPress }) => {
+const TShirtList = ({ tshirts, onTShirtPress , onTShirtLongPress}) => {
     const renderTShirtItem = ({ item }) => (
         <TShirtItem 
             tshirt={item} 
             onPress={() => onTShirtPress(item)} 
+           
         />
     );
 

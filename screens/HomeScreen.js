@@ -1,5 +1,5 @@
 
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Alert, Image, StyleSheet, Text, View } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import TShirtList from '../components/TShirtList';
 import NavBar from '../components/NavBar';
@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 export default function HomeScreen() {
 
   const navigation = useNavigation();
-  var createdToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0NUB0ZXN0LmNvbSIsImNyZWF0ZWQiOjE3MDcwNjI3NzAzOTEsImV4cCI6MTcwNzY2NzU3MH0.HTUTSelLNEUBrtU3Gakf7hP35LcRiIG5fcW5wio7bBXfXg8G-XZ0UjzNbA9idikz-knoP1U9674GUleYzaF-HQ";
+  var createdToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0NUB0ZXN0LmNvbSIsImNyZWF0ZWQiOjE3MDc2Nzc2MjgzMjUsImV4cCI6MTcwODI4MjQyOH0.gwmKfDalzhk_amCpjXWbnSRUrZROazHZxH2MyIg9l3WY6VfXmesARqSQAau9ccqYgQnegeqOGXAg1twKR-BXag";
   const [tshirts, setTshirts] = useState([]);
 
 
@@ -107,12 +107,14 @@ useFocusEffect(
     // Handle T-shirt press here (e.g., navigate to details page)
     console.log('T-shirt pressed:', tshirt);
   };
+  
 
   return (
     <View style={styles.container}>
        <NavBar />
        
-        <TShirtList tshirts={tshirts} onTShirtPress={handleTShirtPress} />
+        <TShirtList tshirts={tshirts} onTShirtPress={handleTShirtPress} 
+                                       />
     </View>
 );
 }

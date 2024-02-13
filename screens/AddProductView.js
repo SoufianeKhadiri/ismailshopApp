@@ -7,15 +7,32 @@ import {Picker} from '@react-native-picker/picker';
 import downloadURL from '../api/uploadImageToFirebase ';
 import axios from 'axios';
 import uploadImageToFirebase from '../api/uploadImageToFirebase ';
+import ImageResizer from 'react-native-image-resizer';
 
 
 export default function AddProductView() {
     const navigation = useNavigation();
     
+    const resizeImage = (uri) => {
+      ImageResizer.createResizedImage(uri, 800, 600, 'JPEG', 80)
+        .then((response) => {
+          
+          setImage(response.uri)
+          setImages((prevImages) => [... prevImages,response.uri]);
+          setImage(response.uri);
+          // response.uri is the URI of the resized image that can be displayed, uploaded...
+          // response.path is the path of the resized image
+          // response.name is the name of the resized image
+          // response.size is the size of the resized image in bytes
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
     var createdToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0NUB0ZXN0LmNvbSIsImNyZWF0ZWQiOjE3MDc2Nzc2MjgzMjUsImV4cCI6MTcwODI4MjQyOH0.gwmKfDalzhk_amCpjXWbnSRUrZROazHZxH2MyIg9l3WY6VfXmesARqSQAau9ccqYgQnegeqOGXAg1twKR-BXag";
     let [images, setImages] = useState([]);
     let [image, setImage] = useState('https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/33533fe2-1157-4001-896e-1803b30659c8/air-force-1-07-herrenschuh-HvZlfx.png');
-    let [imagesLinks, setImagesLinks] = useState([]);
+    
     const [productName, setProductName] = useState('');
       const [productDescription, setProductDescription] = useState('');
       const [price, setPrice] = useState('');
@@ -37,21 +54,6 @@ export default function AddProductView() {
         );
       };
       
-      const addImageLink = (picUrl) => {
-        setImagesLinks(currentPics => [...currentPics, picUrl]);
-      };
-
-
-        const imageList = [
-          { uri: 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/33533fe2-1157-4001-896e-1803b30659c8/air-force-1-07-herrenschuh-HvZlfx.png' },
-          { uri: 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/33533fe2-1157-4001-896e-1803b30659c8/air-force-1-07-herrenschuh-HvZlfx.png' },
-          { uri: 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/33533fe2-1157-4001-896e-1803b30659c8/air-force-1-07-herrenschuh-HvZlfx.png' },
-          { uri: 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/33533fe2-1157-4001-896e-1803b30659c8/air-force-1-07-herrenschuh-HvZlfx.png' },
-          { uri: 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/33533fe2-1157-4001-896e-1803b30659c8/air-force-1-07-herrenschuh-HvZlfx.png' },
-          { uri: 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/33533fe2-1157-4001-896e-1803b30659c8/air-force-1-07-herrenschuh-HvZlfx.png' },
-          // more images
-        ];
-     
       
 
 const openCamera =  () => {
@@ -68,8 +70,9 @@ const openCamera =  () => {
         console.log('ImagePicker Error: ', response.error);
       } else {
         const source = response.assets[0].uri;
-        setImages((prevImages) => [... prevImages,source]);
-        setImage(source);
+        
+        resizeImage(source)
+        
         
       }
     });
@@ -89,26 +92,15 @@ const openImageLibrary = () => {
           console.log('ImagePicker Error: ', response.error);
         } else {
           const source = response.assets[0].uri;
-          
-          setImages((prevImages) => [... prevImages,source]);
-          setImage(source);
+          resizeImage(source); 
+          setImages((prevImages) => [... prevImages,image]);
+          // setImage(source);
          
         }
       });
     };
 
-// const uploadImagesToFirebase = async () =>{
-//   const links = [];
-//   setImagesLinks([])
-  
-//   for( let imageUri of images){
-//     const Fotolink = await uploadImageToFirebase(imageUri);
-//     links.push(Fotolink);
 
-//   }
-//   setImagesLinks(currentLinks => [...currentLinks, ...links]);
-//   console.log(imagesLinks)
-// }
   
 
 const uploadImagesToFirebase = async () => {
@@ -163,7 +155,7 @@ const handleAddProduct = async () => {
           setCategory(0);
           setBrand('');
           setImages([]);
-          setImagesLinks([]);
+          
 
           showMessage("yes")
 

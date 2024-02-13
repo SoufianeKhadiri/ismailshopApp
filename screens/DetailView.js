@@ -222,6 +222,7 @@ slide: {
 },
 button: {
   marginTop:10,
+  marginBottom:20,
   width: 200, 
   borderWidth: 1,
   borderColor: 'red',
